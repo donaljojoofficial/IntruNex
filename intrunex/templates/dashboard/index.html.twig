@@ -11,7 +11,6 @@
 {% endblock %}
 
 {% block body %}
-<div id="react-dark-veil"></div>
 <div class="dashboard-wrapper">
     <header class="dashboard-header">
         <div class="logo">
@@ -125,9 +124,16 @@
             </div>
 
             <div class="card add-asset">
-                <h3>Add & Scan New Asset</h3>
+                <h3>Manage Assets</h3>
+                <p>You can add a new asset to your inventory or view your existing assets.</p>
+                <div class="button-group">
+                    <a href="{{ path('asset_create') }}" class="btn btn-primary">Add Asset</a>
+                    <a href="{{ path('asset_list') }}" class="btn btn-secondary">View Assets</a>
+                </div>
+                <hr style="margin: 20px 0; border-color: var(--border-color);">
+                <h5>Run a Quick Scan</h5>
                 <form action="{{ path('dashboard_asset_scan', {'id': 'ASSET_ID'}) }}" method="POST" id="scan-form">
-                    <label for="asset-select">Select Asset</label>
+                    <label for="asset-select">Select an asset to scan:</label>
                     <select id="asset-select" name="asset_id" class="form-control">
                         {% for asset in assets %}
                             <option value="{{ asset.id }}">{{ asset.name }}</option>
