@@ -73,7 +73,7 @@
 /* --- Grids and Cards --- */
 .grid-container {
     display: grid;
-    gap: 25px;
+    gap: 35px;
     margin-bottom: 25px;
     align-items: stretch; /* Changed */
 }
@@ -83,10 +83,10 @@
 .card {
     background-color: var(--bg-light-dark);
     border-radius: 12px;
-    padding: 25px;
+    padding: 15px;
     border: 1px solid var(--border-color);
     backdrop-filter: blur(10px); /* Add glassmorphism effect */
-    height: 400px;
+    min-height: 150px;
 }
 .card h3 {
     margin-top: 0;
