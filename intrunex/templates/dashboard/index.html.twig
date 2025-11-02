@@ -35,54 +35,7 @@
                 <span>{{ "now"|date("F d, Y") }}</span>
             </div>
         </div>
-        <div class="grid-container top-grid">
-            <div class="card system-health">
-                <h3>System Health</h3>
-                <div class="progress-donut" style="--progress: {{ (assetCount > 0) ? (100 - ((vulnerabilityCount / assetCount) * 100)) : 100 }};">
-                    <div class="progress-text">
-                        <span class="percentage">{{ (assetCount > 0) ? (100 - ((vulnerabilityCount / assetCount) * 100))|round : 100 }}%</span>
-                        <span class="label">Secure</span>
-                    </div>
-                </div>
-                <ul class="health-stats">
-                    <li><span class="dot green"></span> Total Assets: {{ assetCount }}</li>
-                    <li><span class="dot gray"></span> Vulnerabilities Detected: {{ vulnerabilityCount }}</li>
-                </ul>
-            </div>
-
-            <div class="card assets-overview">
-                <h3>Assets Overview</h3>
-                <ul>
-                    {% for asset in assets %}
-                        <li>
-                            <span class="asset-name">{{ asset.name }}</span>
-                            {# Add logic for status dot based on asset properties #}
-                            <span class="status-dot green"></span> Monitored
-                            <span class="action-circle"></span>
-                        </li>
-                    {% else %}
-                        <li>No assets found.</li>
-                    {% endfor %}
-                </ul>
-            </div>
-
-            <div class="card recent-vulnerabilities">
-                <h3>Recent Vulnerabilities by Asset</h3>
-                <ul>
-                    {% for vulnerability in recentVulnerabilities %}
-                        <li>
-                            <span class="vulnerability-name">{{ vulnerability.description }} ({{ vulnerability.asset.name }})</span>
-                            <span class="severity-tag {{ vulnerability.severity|lower }}">{{ vulnerability.severity }}</span>
-                            <span class="expand-icon">+</span>
-                        </li>
-                    {% else %}
-                        <li>No recent vulnerabilities found.</li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </div>
-
-        <div class="grid-container mid-grid">
+        <div class="dashboard-grid">
             <div class="card scan-reports">
                 <h3>Scan Reports</h3>
                 <table class="scan-reports-table">
@@ -112,7 +65,48 @@
                     </tbody>
                 </table>
             </div>
-
+            <div class="card assets-overview">
+                <h3>Assets Overview</h3>
+                <ul>
+                    {% for asset in assets %}
+                        <li>
+                            <span class="asset-name">{{ asset.name }}</span>
+                            {# Add logic for status dot based on asset properties #}
+                            <span class="status-dot green"></span> Monitored
+                            <span class="action-circle"></span>
+                        </li>
+                    {% else %}
+                        <li>No assets found.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="card recent-vulnerabilities">
+                <h3>Recent Vulnerabilities by Asset</h3>
+                <ul>
+                    {% for vulnerability in recentVulnerabilities %}
+                        <li>
+                            <span class="vulnerability-name">{{ vulnerability.description }} ({{ vulnerability.asset.name }})</span>
+                            <span class="severity-tag {{ vulnerability.severity|lower }}">{{ vulnerability.severity }}</span>
+                            <span class="expand-icon">+</span>
+                        </li>
+                    {% else %}
+                        <li>No recent vulnerabilities found.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="card system-health">
+                <h3>System Health</h3>
+                <div class="progress-donut" style="--progress: {{ (assetCount > 0) ? (100 - ((vulnerabilityCount / assetCount) * 100)) : 100 }};">
+                    <div class="progress-text">
+                        <span class="percentage">{{ (assetCount > 0) ? (100 - ((vulnerabilityCount / assetCount) * 100))|round : 100 }}%</span>
+                        <span class="label">Secure</span>
+                    </div>
+                </div>
+                <ul class="health-stats">
+                    <li><span class="dot green"></span> Total Assets: {{ assetCount }}</li>
+                    <li><span class="dot gray"></span> Vulnerabilities Detected: {{ vulnerabilityCount }}</li>
+                </ul>
+            </div>
             <div class="card activity-log">
                 <h3>Activity Log</h3>
                 <ul>
@@ -120,9 +114,8 @@
                         <li><span class="log-dot"></span> {{ item.message }} <strong>{{ item.status }}</strong></li>
                     {% endfor %}
                 </ul>
-                <a href="#" class="btn btn-secondary">VIEW FULL LOG</a>
+                <a href="{{ path('activity_log') }}" class="btn btn-secondary">VIEW FULL LOG</a>
             </div>
-
             <div class="card add-asset">
                 <h3>Manage Assets</h3>
                 <p>You can add a new asset to your inventory or view your existing assets.</p>

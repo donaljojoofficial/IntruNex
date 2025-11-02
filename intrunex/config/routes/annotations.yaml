@@ -15,4 +15,8 @@ asset_discovery:
 
 landing_and_info:
   resource: '../../src/Modules/LandingAndInfo/Controller'
-  type: annotation  
+  type: annotation
+
+audit_logging_controllers:
+    resource: ../../src/Modules/AuditLogging/Controller/
+    type: annotation  

@@ -82,6 +82,13 @@ class DashboardController extends AbstractController
             return $this->redirectToRoute('dashboard');
         }
 
+        // Log the scan event
+        $activityLog = new ActivityLog();
+        $activityLog->setMessage('Scan started for asset: ' . $asset->getName());
+        $activityLog->setStatus('Initiated');
+        $activityLog->setCreatedAt(new \DateTimeImmutable());
+        $em->persist($activityLog);
+
         // Create and dispatch a scan job message
         $scanJob = new ScanJob();
         $scanJob->setAsset($asset);
