@@ -74,12 +74,12 @@ class DashboardController extends AbstractController
 
     #[Route('/dashboard/asset/{id}/scan', name: 'dashboard_asset_scan', methods: ['POST'])]
     #[IsGranted('ROLE_USER')]
-    public function scanAsset(Request $request, Asset $asset, EntityManagerInterface $em, MessageBusInterface $bus): Response
+    public function scanAsset(Request $request, $id, EntityManagerInterface $em, MessageBusInterface $bus): Response
     {
-        // Security check to ensure the asset belongs to the current user
-        if ($asset->getUser() !== $this->getUser()) {
-            $this->addFlash('error', 'You are not authorized to scan this asset.');
-            return $this->redirectToRoute('dashboard');
+        $asset = $em->getRepository(Asset::class)->find($id);
+
+        if (!$asset || $asset->getUser() !== $this->getUser()) {
+            throw $this->createNotFoundException();
         }
 
         // Log the scan event

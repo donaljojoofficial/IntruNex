@@ -81,11 +81,14 @@ class AssetController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'asset_edit')]
-    public function edit(Asset $asset, Request $request, EntityManagerInterface $em): Response
+    public function edit($id, Request $request, EntityManagerInterface $em): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
-        if ($asset->getUser() !== $this->getUser()) {
-            throw $this->createAccessDeniedException();
+
+        $asset = $em->getRepository(Asset::class)->find($id);
+
+        if (!$asset || $asset->getUser() !== $this->getUser()) {
+            throw $this->createNotFoundException();
         }
 
         $form = $this->createForm(AssetFormType::class, $asset);
@@ -104,7 +107,7 @@ class AssetController extends AbstractController
     }
 
     #[Route('/{id}/delete', name: 'asset_delete', methods: ['POST'])]
-    public function delete(int $id, Request $request, EntityManagerInterface $em): Response
+    public function delete($id, Request $request, EntityManagerInterface $em): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
@@ -138,10 +141,12 @@ class AssetController extends AbstractController
     }
 
     #[Route('/{id}', name: 'asset_detail', methods: ['GET'])]
-    public function detail(Asset $asset, EntityManagerInterface $em): Response
+    public function detail($id, EntityManagerInterface $em): Response
     {
-        if ($asset->getUser() !== $this->getUser()) {
-            throw $this->createAccessDeniedException();
+        $asset = $em->getRepository(Asset::class)->find($id);
+
+        if (!$asset || $asset->getUser() !== $this->getUser()) {
+            throw $this->createNotFoundException();
         }
 
         $vulnerabilities = $em->getRepository(Vulnerability::class)->findBy(['asset' => $asset]);
@@ -153,11 +158,14 @@ class AssetController extends AbstractController
     }
 
     #[Route('/{id}/profile', name: 'asset_profile', methods: ['POST'])]
-    public function profileAsset(Asset $asset, Request $request, AssetProfilingService $profilingService): Response
+    public function profileAsset($id, Request $request, AssetProfilingService $profilingService, EntityManagerInterface $em): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
-        if ($asset->getUser() !== $this->getUser()) {
-            throw $this->createAccessDeniedException();
+
+        $asset = $em->getRepository(Asset::class)->find($id);
+
+        if (!$asset || $asset->getUser() !== $this->getUser()) {
+            throw $this->createNotFoundException();
         }
 
         if ($this->isCsrfTokenValid('profile-asset'.$asset->getId(), $request->request->get('_token'))) {
@@ -171,10 +179,12 @@ class AssetController extends AbstractController
     }
 
     #[Route('/vuln-scan/{id}', name: 'asset_vuln_scan', methods: ['POST'])]
-    public function vulnScan(Asset $asset, Request $request, VulnerabilityScanService $vulnerabilityScanService, MessageBusInterface $bus): Response
+    public function vulnScan($id, Request $request, VulnerabilityScanService $vulnerabilityScanService, MessageBusInterface $bus, EntityManagerInterface $em): Response
     {
-        if ($asset->getUser() !== $this->getUser()) {
-            throw $this->createAccessDeniedException();
+        $asset = $em->getRepository(Asset::class)->find($id);
+
+        if (!$asset || $asset->getUser() !== $this->getUser()) {
+            throw $this->createNotFoundException();
         }
 
         if ($this->isCsrfTokenValid('vuln-scan-asset'.$asset->getId(), $request->request->get('_token'))) {

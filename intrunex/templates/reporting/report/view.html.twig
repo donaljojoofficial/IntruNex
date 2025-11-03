@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Scan Report - {{ asset.name }}{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header">
+            <h1 class="card-title">Scan Report for {{ asset.name }}</h1>
+            <p class="card-subtitle mb-2 text-muted">Scan performed on {{ scanJob.startedAt|date('F d, Y H:i') }}</p>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Asset Details</h2>
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th>Name</th>
+                                <td>{{ asset.name }}</td>
+                            </tr>
+                            <tr>
+                                <th>IP Address</th>
+                                <td>{{ asset.ipAddress }}</td>
+                            </tr>
+                            <tr>
+                                <th>Type</th>
+                                <td>{{ asset.type }}</td>
+                            </tr>
+                            <tr>
+                                <th>Description</th>
+                                <td>{{ asset.description }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-6">
+                    <h2>Asset Profiling</h2>
+                    <p><strong>Open Ports:</strong></p>
+                    {% if asset.openPorts %}
+                        <ul>
+                        {% for port in asset.openPorts %}
+                            <li>{{ port }}</li>
+                        {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>No open ports detected.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <hr>
+
+            <h2>Vulnerabilities</h2>
+            {% if vulnerabilities is not empty %}
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Severity</th>
+                            <th>Description</th>
+                            <th>Discovered At</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for vulnerability in vulnerabilities %}
+                            <tr>
+                                <td><span class="badge bg-{{ vulnerability.severity|lower }}">{{ vulnerability.severity }}</span></td>
+                                <td>{{ vulnerability.description }}</td>
+                                <td>{{ vulnerability.discoveredAt|date('F d, Y H:i') }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div class="alert alert-success" role="alert">
+                    No vulnerabilities found for this asset.
+                </div>
+            {% endif %}
+        </div>
+        <div class="card-footer text-center">
+            <a href="{{ path('dashboard') }}" class="btn btn-primary">Back to Dashboard</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

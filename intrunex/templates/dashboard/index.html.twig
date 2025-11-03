@@ -10,6 +10,22 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
 {% endblock %}
 
+{% block javascripts %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const assetSelect = document.getElementById('asset-select');
+            if (assetSelect) {
+                assetSelect.addEventListener('change', function() {
+                    var assetId = this.value;
+                    var form = document.getElementById('scan-form');
+                    var newAction = "{{ path('dashboard_asset_scan', {'id': 'ASSET_ID'}) }}".replace('ASSET_ID', assetId);
+                    form.action = newAction;
+                });
+            }
+        });
+    </script>
+{% endblock %}
+
 {% block body %}
 <div class="dashboard-wrapper">
     <header class="dashboard-header">
@@ -55,7 +71,7 @@
                                 <td>{{ scanJob.startedAt|date('m/d/Y') }}</td>
                                 <td>{{ scanJob.asset.name }}</td>
                                 <td>{{ scanJob.status }}</td>
-                                <td><a href="#" class="btn btn-primary btn-sm">View Report</a></td>
+                                <td><a href="{{ path('report_view', {'id': scanJob.id}) }}" class="btn btn-primary btn-sm">View Report</a></td>
                             </tr>
                         {% else %}
                             <tr>
@@ -125,7 +141,7 @@
                 </div>
                 <hr style="margin: 20px 0; border-color: var(--border-color);">
                 <h5>Run a Quick Scan</h5>
-                <form action="{{ path('dashboard_asset_scan', {'id': 'ASSET_ID'}) }}" method="POST" id="scan-form">
+                <form action="{{ path('dashboard_asset_scan', {'id': assets.0.id|default(0)}) }}" method="POST" id="scan-form">
                     <label for="asset-select">Select an asset to scan:</label>
                     <select id="asset-select" name="asset_id" class="form-control">
                         {% for asset in assets %}

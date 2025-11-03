@@ -19,4 +19,8 @@ landing_and_info:
 
 audit_logging_controllers:
     resource: ../../src/Modules/AuditLogging/Controller/
-    type: annotation  
+    type: annotation
+
+reporting_controllers:
+    resource: ../../src/Modules/Reporting/Controller/
+    type: annotation
