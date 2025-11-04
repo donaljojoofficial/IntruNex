@@ -9,10 +9,13 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class SecurityController extends AbstractController
 {
-    #[Route(path: '/login', name: 'app_login')]
+    // allow POST on the same route so the AbstractLoginFormAuthenticator can detect and intercept it
+    #[Route(path: '/login', name: 'app_login', methods: ['GET','POST'])]
     public function login(Request $request, AuthenticationUtils $authenticationUtils, LoggerInterface $logger, CsrfTokenManagerInterface $csrfManager): Response
     {
         $session = $request->getSession();
