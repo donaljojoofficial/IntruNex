@@ -6,12 +6,31 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class SecurityController extends AbstractController
 {
     #[Route(path: '/login', name: 'app_login')]
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    public function login(Request $request, AuthenticationUtils $authenticationUtils, LoggerInterface $logger, CsrfTokenManagerInterface $csrfManager): Response
     {
+        $session = $request->getSession();
+        $logger->info('Login action start (method): '.$request->getMethod());
+        $logger->info('Session ID at entry: '.$session->getId());
+
+        if ($request->isMethod('POST')) {
+            $requestToken = $request->request->get('_csrf_token');
+            $logger->info('Request CSRF token: '.$requestToken);
+            // Try to read token from manager for same id to show stored value (debug only)
+            $stored = $csrfManager->getToken('authenticate')->getValue();
+            $logger->info('CsrfTokenManager stored token for "authenticate": '.$stored);
+        } else {
+            // on GET show what token will be rendered
+            $renderToken = $csrfManager->getToken('authenticate')->getValue();
+            $logger->info('CsrfTokenManager token for "authenticate" at render: '.$renderToken);
+        }
+
         // if ($this->getUser()) {
         //     return $this->redirectToRoute('target_path');
         // }
