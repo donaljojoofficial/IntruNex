@@ -20,7 +20,7 @@ use Symfony\Component\Security\Http\Util\TargetPathTrait;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
-use Symfony\Component\Security\Csrf\CsrfToken;
+
 class AppCustomAuthenticator extends AbstractLoginFormAuthenticator
 {
     use TargetPathTrait;
@@ -42,11 +42,6 @@ class AppCustomAuthenticator extends AbstractLoginFormAuthenticator
         $password = $request->request->get('password', '');
         $csrfToken = $request->request->get('_csrf_token');
 
-        if (false === $this->csrfTokenManager->isTokenValid(new CsrfToken('authenticate', $csrfToken))) {
-            $this->logger->error('Invalid CSRF token');
-            throw new InvalidCsrfTokenException();
-        }
-
         $request->getSession()->set(Security::LAST_USERNAME, $email);
 
         // Debug logs
@@ -57,6 +52,7 @@ class AppCustomAuthenticator extends AbstractLoginFormAuthenticator
             new UserBadge($email),
             new PasswordCredentials($password),
             [
+                new CsrfTokenBadge('authenticate', $csrfToken),
                 new RememberMeBadge(),
             ]
         );
