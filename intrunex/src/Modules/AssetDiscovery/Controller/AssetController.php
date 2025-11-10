@@ -6,7 +6,8 @@ use App\Modules\AssetDiscovery\Entity\Asset;
 use App\Modules\AssetVulnerability\Entity\Vulnerability;
 use App\Modules\AssetDiscovery\Form\AssetFormType;
 use App\Modules\AssetDiscovery\Service\AssetProfilingService;
-use App\Modules\VulnerabilityDetection\Service\VulnerabilityScanService;
+use App\Modules\AssetDiscovery\Service\VulnerabilityScanService;
+use App\Modules\AssetDiscovery\Repository\AssetRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,22 +20,24 @@ class AssetController extends AbstractController
 {
     private AssetProfilingService $assetProfilingService;
     private VulnerabilityScanService $vulnerabilityScanService;
+    private AssetRepository $assetRepository;
 
     public function __construct(
         AssetProfilingService $assetProfilingService,
-        VulnerabilityScanService $vulnerabilityScanService
+        VulnerabilityScanService $vulnerabilityScanService,
+        AssetRepository $assetRepository
     ) {
         $this->assetProfilingService = $assetProfilingService;
         $this->vulnerabilityScanService = $vulnerabilityScanService;
+        $this->assetRepository = $assetRepository;
     }
 
     #[Route('/', name: 'asset_list')]
-    public function list(EntityManagerInterface $em): Response
+    public function list(): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
-        $assets = $em->getRepository(Asset::class)
-                     ->findBy(['user' => $this->getUser()], ['userAssetNumber' => 'ASC']);
+        $assets = $this->assetRepository->findAllForCurrentUser();
 
         return $this->render('asset_discovery/asset/list.html.twig', [
             'assets' => $assets,
@@ -54,12 +57,7 @@ class AssetController extends AbstractController
             $asset->setUser($this->getUser());
 
             // Assign next userAssetNumber
-            $qb = $em->createQueryBuilder();
-            $qb->select('MAX(a.userAssetNumber)')
-               ->from(Asset::class, 'a')
-               ->where('a.user = :user')
-               ->setParameter('user', $this->getUser());
-            $maxNum = (int)$qb->getQuery()->getSingleScalarResult();
+            $maxNum = $this->assetRepository->countForCurrentUser();
             $asset->setUserAssetNumber($maxNum + 1);
 
             $em->persist($asset);
@@ -85,9 +83,9 @@ class AssetController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
-        $asset = $em->getRepository(Asset::class)->find($id);
+        $asset = $this->assetRepository->findForCurrentUser($id);
 
-        if (!$asset || $asset->getUser() !== $this->getUser()) {
+        if (!$asset) {
             throw $this->createNotFoundException();
         }
 
@@ -111,8 +109,8 @@ class AssetController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
-        $asset = $em->getRepository(Asset::class)->find($id);
-        if (!$asset || $asset->getUser() !== $this->getUser()) {
+        $asset = $this->assetRepository->findForCurrentUser($id);
+        if (!$asset) {
             throw $this->createNotFoundException();
         }
 
@@ -123,8 +121,7 @@ class AssetController extends AbstractController
             $em->flush();
 
             // Reindex
-            $assets = $em->getRepository(Asset::class)
-                         ->findBy(['user' => $user], ['userAssetNumber' => 'ASC']);
+            $assets = $this->assetRepository->findByForCurrentUser(['user' => $user], ['userAssetNumber' => 'ASC']);
             $i = 1;
             foreach ($assets as $a) {
                 $a->setUserAssetNumber($i++);
@@ -143,9 +140,9 @@ class AssetController extends AbstractController
     #[Route('/{id}', name: 'asset_detail', methods: ['GET'])]
     public function detail($id, EntityManagerInterface $em): Response
     {
-        $asset = $em->getRepository(Asset::class)->find($id);
+        $asset = $this->assetRepository->findForCurrentUser($id);
 
-        if (!$asset || $asset->getUser() !== $this->getUser()) {
+        if (!$asset) {
             throw $this->createNotFoundException();
         }
 
@@ -162,9 +159,9 @@ class AssetController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
-        $asset = $em->getRepository(Asset::class)->find($id);
+        $asset = $this->assetRepository->findForCurrentUser($id);
 
-        if (!$asset || $asset->getUser() !== $this->getUser()) {
+        if (!$asset) {
             throw $this->createNotFoundException();
         }
 
@@ -182,9 +179,9 @@ class AssetController extends AbstractController
     public function vulnScan($id, Request $request, VulnerabilityScanService $vulnerabilityScanService, MessageBusInterface $bus, EntityManagerInterface $em): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
-        $asset = $em->getRepository(Asset::class)->find($id);
+        $asset = $this->assetRepository->findForCurrentUser($id);
 
-        if (!$asset || $asset->getUser() !== $this->getUser()) {
+        if (!$asset) {
             throw $this->createNotFoundException();
         }
 
