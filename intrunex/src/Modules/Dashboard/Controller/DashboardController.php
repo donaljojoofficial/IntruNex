@@ -3,7 +3,6 @@
 namespace App\Modules\Dashboard\Controller;
 
 use App\Modules\AssetDiscovery\Entity\Asset;
-use App\Modules\AssetDiscovery\Repository\AssetRepository;
 use App\Modules\AssetVulnerability\Entity\Vulnerability;
 use App\Modules\ScanManagement\Entity\ScanJob;
 use App\Modules\ScanManagement\Message\ScanJobMessage; // Use generic ScanJobMessage now
@@ -18,13 +17,6 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 class DashboardController extends AbstractController
 {
-    private AssetRepository $assetRepository;
-
-    public function __construct(AssetRepository $assetRepository)
-    {
-        $this->assetRepository = $assetRepository;
-    }
-{
     #[Route('/dashboard', name: 'dashboard')]
     #[IsGranted('ROLE_USER')]
     public function index(EntityManagerInterface $em): Response
@@ -32,7 +24,7 @@ class DashboardController extends AbstractController
         $user = $this->getUser();
 
         // Count assets owned by current user
-        $assetCount = $this->assetRepository->countForCurrentUser();
+        $assetCount = $em->getRepository(Asset::class)->count(['user' => $user]);
 
         // Count vulnerabilities related to user's assets
         $qbVulnCount = $em->createQueryBuilder()
@@ -44,7 +36,7 @@ class DashboardController extends AbstractController
         $vulnerabilityCount = (int) $qbVulnCount->getQuery()->getSingleScalarResult();
 
         // Assets owned by current user
-        $assets = $this->assetRepository->findAllForCurrentUser();
+        $assets = $em->getRepository(Asset::class)->findBy(['user' => $user]);
 
         // Recent scan jobs for user's assets
         $qbScanJobs = $em->createQueryBuilder()
@@ -84,9 +76,9 @@ class DashboardController extends AbstractController
     #[IsGranted('ROLE_USER')]
     public function scanAsset(Request $request, $id, EntityManagerInterface $em, MessageBusInterface $bus): Response
     {
-        $asset = $this->assetRepository->findForCurrentUser($id);
+        $asset = $em->getRepository(Asset::class)->find($id);
 
-        if (!$asset) {
+        if (!$asset || $asset->getUser() !== $this->getUser()) {
             throw $this->createNotFoundException();
         }
 
