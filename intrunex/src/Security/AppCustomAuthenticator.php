@@ -18,15 +18,13 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordC
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
-// Removed Psr\Log\LoggerInterface;
-
 class AppCustomAuthenticator extends AbstractLoginFormAuthenticator
 {
     use TargetPathTrait;
 
     public const LOGIN_ROUTE = 'app_login';
 
-    public function __construct(private UrlGeneratorInterface $urlGenerator, private EntityManagerInterface $em) // Removed LoggerInterface
+    public function __construct(private UrlGeneratorInterface $urlGenerator, private EntityManagerInterface $em)
     {
     }
 
@@ -40,6 +38,7 @@ class AppCustomAuthenticator extends AbstractLoginFormAuthenticator
             new UserBadge($email),
             new PasswordCredentials($request->request->get('password', '')),
             [
+                new CsrfTokenBadge('authenticate', $request->request->get('_csrf_token')),
                 new RememberMeBadge(),
             ]
         );
