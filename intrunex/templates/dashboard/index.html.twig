@@ -7,7 +7,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
 {% endblock %}
 
 {% block javascripts %}
@@ -50,7 +49,7 @@
         <nav class="dashboard-nav">
             <a href="#" class="active">Overview</a>
             <a href="{{ path('scan_reports_index') }}">Reports</a>
-            <a href="#">Analytics</a>
+            <a href="{{ path('app_analytics') }}">Analytics</a>
             <a href="#">Settings</a>
             <a href="{{ path('app_logout') }}">Logout</a>
         </nav>
