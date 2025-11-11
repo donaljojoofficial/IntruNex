@@ -1,0 +1,952 @@
+  ],
+        "Symfony\Component\Messenger\Stamp\ConsumedByWorkerStamp" => [
+          Symfony\Component\Messenger\Stamp\ConsumedByWorkerStamp^ {}
+        ],
+        "Symfony\Component\Messenger\Stamp\AckStamp" => [
+          Symfony\Component\Messenger\Stamp\AckStamp^ {
+            -ack: Closure(Envelope $envelope, Throwable $e = null)^ {
+              class: "Symfony\Component\Messenger\Worker"
+              this: Symfony\Component\Messenger\Worker { …}
+              use: {
+                $transportName: "async"
+                $acked: & false
+              }
+              file: "./vendor/symfony/messenger/Worker.php"
+              line: "149 to 152"
+            }
+          }
+        ]
+      ]
+      -message: App\Modules\ScanManagement\Message\ScanJobMessage^ {
+        -assetId: 52
+      }
+    }
+    trace: {
+      ./vendor/symfony/messenger/Middleware/HandleMessageMiddleware.php:130 { …}
+      ./vendor/symfony/messenger/Middleware/SendMessageMiddleware.php:71 { …}
+      ./vendor/symfony/messenger/Middleware/FailedMessageProcessingMiddleware.php:34 { …}
+      ./vendor/symfony/messenger/Middleware/DispatchAfterCurrentBusMiddleware.php:68 { …}
+      ./vendor/symfony/messenger/Middleware/RejectRedeliveredMessageMiddleware.php:41 { …}
+      ./vendor/symfony/messenger/Middleware/AddBusNameStampMiddleware.php:37 { …}
+      ./vendor/symfony/messenger/Middleware/TraceableMiddleware.php:43 { …}
+      ./vendor/symfony/messenger/MessageBus.php:73 { …}
+      ./vendor/symfony/messenger/TraceableMessageBus.php:41 { …}
+      ./vendor/symfony/messenger/RoutableMessageBus.php:54 { …}
+      ./vendor/symfony/messenger/Worker.php:156 { …}
+      ./vendor/symfony/messenger/Worker.php:105 { …}
+      ./vendor/symfony/messenger/Command/ConsumeMessagesCommand.php:232 { …}
+      ./vendor/symfony/console/Command/Command.php:308 { …}
+      ./vendor/symfony/console/Application.php:1032 { …}
+      ./vendor/symfony/framework-bundle/Console/Application.php:94 { …}
+      ./vendor/symfony/console/Application.php:301 { …}
+      ./vendor/symfony/framework-bundle/Console/Application.php:80 { …}
+      ./vendor/symfony/console/Application.php:171 { …}
+      ./vendor/symfony/runtime/Runner/Symfony/ConsoleApplicationRunner.php:54 { …}
+      ./vendor/autoload_runtime.php:29 { …}
+      ./bin/console:15 {
+        › 
+        › require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
+        › 
+        arguments: {
+          "/workspaces/IntruNex/intrunex/vendor/autoload_runtime.php"
+        }
+      }
+    }
+  }
+]
+08:53:02 INFO      [messenger] Received message App\Modules\ScanManagement\Message\ScanJobMessage
+[
+  "class" => "App\Modules\ScanManagement\Message\ScanJobMessage"
+]
+08:53:02 WARNING   [messenger] Error thrown while handling message App\Modules\ScanManagement\Message\ScanJobMessage. Sending for retry #3 using 4000 ms delay. Error: "Handling "App\Modules\ScanManagement\Message\ScanJobMessage" failed: Asset not found for id 52"
+[
+  "class" => "App\Modules\ScanManagement\Message\ScanJobMessage",
+  "retryCount" => 3,
+  "delay" => 4000,
+  "error" => "Handling "App\Modules\ScanManagement\Message\ScanJobMessage" failed: Asset not found for id 52",
+  "exception" => Symfony\Component\Messenger\Exception\HandlerFailedException^ {
+    #message: "Handling "App\Modules\ScanManagement\Message\ScanJobMessage" failed: Asset not found for id 52"
+    #code: 0
+    #file: "./vendor/symfony/messenger/Middleware/HandleMessageMiddleware.php"
+    #line: 130
+    -previous: RuntimeException {#1
+      #message: "Asset not found for id 52"
+      #code: 0
+      #file: "./src/Modules/ScanManagement/MessageHandler/ScanJobHandler.php"
+      #line: 30
+      trace: {
+        ./src/Modules/ScanManagement/MessageHandler/ScanJobHandler.php:30 {
+          App\Modules\ScanManagement\MessageHandler\ScanJobHandler->__invoke(ScanJobMessage $message)^
+          › if (!$asset) {
+          ›     throw new \RuntimeException('Asset not found for id ' . $message->getAssetId());
+          › }
+        }
+        ./vendor/symfony/messenger/Middleware/HandleMessageMiddleware.php:97 { …}
+        ./vendor/symfony/messenger/Middleware/SendMessageMiddleware.php:71 { …}
+        ./vendor/symfony/messenger/Middleware/FailedMessageProcessingMiddleware.php:34 { …}
+        ./vendor/symfony/messenger/Middleware/DispatchAfterCurrentBusMiddleware.php:68 { …}
+        ./vendor/symfony/messenger/Middleware/RejectRedeliveredMessageMiddleware.php:41 { …}
+        ./vendor/symfony/messenger/Middleware/AddBusNameStampMiddleware.php:37 { …}
+        ./vendor/symfony/messenger/Middleware/TraceableMiddleware.php:43 { …}
+        ./vendor/symfony/messenger/MessageBus.php:73 { …}
+        ./vendor/symfony/messenger/TraceableMessageBus.php:41 { …}
+        ./vendor/symfony/messenger/RoutableMessageBus.php:54 { …}
+        ./vendor/symfony/messenger/Worker.php:156 { …}
+        ./vendor/symfony/messenger/Worker.php:105 { …}
+        ./vendor/symfony/messenger/Command/ConsumeMessagesCommand.php:232 { …}
+        ./vendor/symfony/console/Command/Command.php:308 { …}
+        ./vendor/symfony/console/Application.php:1032 { …}
+        ./vendor/symfony/framework-bundle/Console/Application.php:94 { …}
+        ./vendor/symfony/console/Application.php:301 { …}
+        ./vendor/symfony/framework-bundle/Console/Application.php:80 { …}
+        ./vendor/symfony/console/Application.php:171 { …}
+        ./vendor/symfony/runtime/Runner/Symfony/ConsoleApplicationRunner.php:54 { …}
+        ./vendor/autoload_runtime.php:29 { …}
+        ./bin/console:15 { …}
+      }
+    }
+    -exceptions: [
+      RuntimeException {#1}
+    ]
+    -envelope: Symfony\Component\Messenger\Envelope^ {
+      -stamps: [
+        "Symfony\Component\Messenger\Stamp\BusNameStamp" => [
+          Symfony\Component\Messenger\Stamp\BusNameStamp^ {
+            -busName: "messenger.bus.default"
+          }
+        ],
+        "Symfony\Component\Messenger\Stamp\TransportMessageIdStamp" => [
+          Symfony\Component\Messenger\Stamp\TransportMessageIdStamp^ {
+            -id: 181
+          },
+          Symfony\Component\Messenger\Stamp\TransportMessageIdStamp^ {
+            -id: 182
+          },
+          Symfony\Component\Messenger\Stamp\TransportMessageIdStamp^ {
+            -id: 183
+          }
+        ],
+        "Symfony\Component\Messenger\Stamp\ErrorDetailsStamp" => [
+          Symfony\Component\Messenger\Stamp\ErrorDetailsStamp^ {
+            -exceptionClass: "RuntimeException"
+            -exceptionCode: 0
+            -exceptionMessage: "Asset not found for id 52"
+            -flattenException: Symfony\Component\ErrorHandler\Exception\FlattenException^ {
+              -message: "Asset not found for id 52"
+              -code: 0
+              -previous: null
+              -trace: [
+                [
+                  "namespace" => "",
+                  "short_class" => "",
+                  "class" => "",
+                  "type" => "",
+                  "function" => "",
+                  "file" => "/workspaces/IntruNex/intrunex/src/Modules/ScanManagement/MessageHandler/ScanJobHandler.php",
+                  "line" => 30,
+                  "args" => []
+                ],
+                [
+                  "namespace" => "App\Modules\ScanManagement\MessageHandler",
+                  "short_class" => "ScanJobHandler",
+                  "class" => "App\Modules\ScanManagement\MessageHandler\ScanJobHandler",
+                  "type" => "->",
+                  "function" => "__invoke",
+                  "file" => "/workspaces/IntruNex/intrunex/vendor/symfony/messenger/Middleware/HandleMessageMiddleware.php",
+                  "line" => 97,
+                  "args" => []
+                ],
+                [
+                  "namespace" => "Symfony\Component\Messenger\Middleware",
+                  "short_class" => "HandleMessageMiddleware",
+                  "class" => "Symfony\Component\Messenger\Middleware\HandleMessageMiddleware",
+                  "type" => "->",
+                  "function" => "handle",
+                  "file" => "/workspaces/IntruNex/intrunex/vendor/symfony/messenger/Middleware/SendMessageMiddleware.php",
+                  "line" => 71,
+                  "args" => []
+                ],
+                [
+                  "namespace" => "Symfony\Component\Messenger\Middleware",
+                  "short_class" => "SendMessageMiddleware",
+                  "class" => "Symfony\Component\Messenger\Middleware\SendMessageMiddleware",
+                  "type" => "->",
+                  "function" => "handle",
+                  "file" => "/workspaces/IntruNex/intrunex/vendor/symfony/messenger/Middleware/FailedMessageProcessingMiddleware.php",
+                  "line" => 34,
+                  "args" => []
+                ],
+                [
+                  "namespace" => "Symfony\Component\Messenger\Middleware",
+                  "short_class" => "FailedMessageProcessingMiddleware",
+                  "class" => "Symfony\Component\Messenger\Middleware\FailedMessageProcessingMiddleware",
+                  "type" => "->",
+                  "function" => "handle",
+                  "file" => "/workspaces/IntruNex/intrunex/vendor/symfony/messenger/Middleware/DispatchAfterCurrentBusMiddleware.php",
+                  "line" => 68,
+                  "args" => []
+                ],
+                [
+                  "namespace" => "Symfony\Component\Messenger\Middleware",
+                  "short_class" => "DispatchAfterCurrentBusMiddleware",
+                  "class" => "Symfony\Component\Messenger\Middleware\DispatchAfterCurrentBusMiddleware",
+                  "type" => "->",
+                  "function" => "handle",
+                  "file" => "/workspaces/IntruNex/intrunex/vendor/symfony/messenger/Middleware/RejectRedeliveredMessageMiddleware.php",
+                  "line" => 41,
+                  "args" => []
+                ],
+                [
+                  "namespace" => "Symfony\Component\Messenger\Middleware",
+                  "short_class" => "RejectRedeliveredMessageMiddleware",
+                  "class" => "Symfony\Component\Messenger\Middleware\RejectRedeliveredMessageMiddleware",
+                  "type" => "->",
+                  "function" => "handle",
+                  "file" => "/workspaces/IntruNex/intrunex/vendor/symfony/messenger/Middleware/AddBusNameStampMiddleware.php",
+                  "line" => 37,
+                  "args" => []
+                ],
+                [
+                  "namespace" => "Symfony\Component\Messenger\Middleware",
+                  "short_class" => "AddBusNameStampMiddleware",
+                  "class" => "Symfony\Component\Messenger\Middleware\AddBusNameStampMiddleware",
+                  "type" => "->",
+                  "function" => "handle",
+                  "file" => "/workspaces/IntruNex/intrunex/vendor/symfony/messenger/Middleware/TraceableMiddleware.php",
+                  "line" => 43,
+                  "args" => []
+                ],
+                [
+                  "namespace" => "Symfony\Component\Messenger\Middleware",
+                  "short_class" => "TraceableMiddleware",
+                  "class" => "Symfony\Component\Messenger\Middleware\TraceableMiddleware",
+                  "type" => "->",
+                  "function" => "handle",
+                  "file" => "/workspaces/IntruNex/intrunex/vendor/symfony/messenger/MessageBus.php",
+                  "line" => 73,
+                  "args" => []
+                ],
+                [
+                  "namespace" => "Symfony\Component\Messenger",
+                  "short_class" => "MessageBus",
+                  "class" => "Symfony\Component\Messenger\MessageBus",
+                  "type" => "->",
+                  "function" => "dispatch",
+                  "file" => "/workspaces/IntruNex/intrunex/vendor/symfony/messenger/TraceableMessageBus.php",
+                  "line" => 41,
+                  "args" => []
+                ],
+                [
+                  "namespace" => "Symfony\Component\Messenger",
+                  "short_class" => "TraceableMessageBus",
+                  "class" => "Symfony\Component\Messenger\TraceableMessageBus",
+                  "type" => "->",
+                  "function" => "dispatch",
+                  "file" => "/workspaces/IntruNex/intrunex/vendor/symfony/messenger/RoutableMessageBus.php",
+                  "line" => 54,
+                  "args" => []
+                ],
+                [
+                  "namespace" => "Symfony\Component\Messenger",
+                  "short_class" => "RoutableMessageBus",
+                  "class" => "Symfony\Component\Messenger\RoutableMessageBus",
+                  "type" => "->",
+                  "function" => "dispatch",
+                  "file" => "/workspaces/IntruNex/intrunex/vendor/symfony/messenger/Worker.php",
+                  "line" => 156,
+                  "args" => []
+                ],
+                [
+                  "namespace" => "Symfony\Component\Messenger",
+                  "short_class" => "Worker",
+                  "class" => "Symfony\Component\Messenger\Worker",
+                  "type" => "->",
+                  "function" => "handleMessage",
+                  "file" => "/workspaces/IntruNex/intrunex/vendor/symfony/messenger/Worker.php",
+                  "line" => 105,
+                  "args" => []
+                ],
+                [
+                  "namespace" => "Symfony\Component\Messenger",
+                  "short_class" => "Worker",
+                  "class" => "Symfony\Component\Messenger\Worker",
+                  "type" => "->",
+                  "function" => "run",
+                  "file" => "/workspaces/IntruNex/intrunex/vendor/symfony/messenger/Command/ConsumeMessagesCommand.php",
+                  "line" => 232,
+                  "args" => []
+                ],
+                [
+                  "namespace" => "Symfony\Component\Messenger\Command",
+                  "short_class" => "ConsumeMessagesCommand",
+                  "class" => "Symfony\Component\Messenger\Command\ConsumeMessagesCommand",
+                  "type" => "->",
+                  "function" => "execute",
+                  "file" => "/workspaces/IntruNex/intrunex/vendor/symfony/console/Command/Command.php",
+                  "line" => 308,
+                  "args" => []
+                ],
+                [
+                  "namespace" => "Symfony\Component\Console\Command",
+                  "short_class" => "Command",
+                  "class" => "Symfony\Component\Console\Command\Command",
+                  "type" => "->",
+                  "function" => "run",
+                  "file" => "/workspaces/IntruNex/intrunex/vendor/symfony/console/Application.php",
+                  "line" => 1032,
+                  "args" => []
+                ],
+                [
+                  "namespace" => "Symfony\Component\Console",
+                  "short_class" => "Application",
+                  "class" => "Symfony\Component\Console\Application",
+                  "type" => "->",
+                  "function" => "doRunCommand",
+                  "file" => "/workspaces/IntruNex/intrunex/vendor/symfony/framework-bundle/Console/Application.php",
+                  "line" => 94,
+                  "args" => []
+                ],
+                [
+                  "namespace" => "Symfony\Bundle\FrameworkBundle\Console",
+                  "short_class" => "Application",
+                  "class" => "Symfony\Bundle\FrameworkBundle\Console\Application",
+                  "type" => "->",
+                  "function" => "doRunCommand",
+                  "file" => "/workspaces/IntruNex/intrunex/vendor/symfony/console/Application.php",
+                  "line" => 301,
+                  "args" => []
+                ],
+                [
+                  "namespace" => "Symfony\Component\Console",
+                  "short_class" => "Application",
+                  "class" => "Symfony\Component\Console\Application",
+                  "type" => "->",
+                  "function" => "doRun",
+                  "file" => "/workspaces/IntruNex/intrunex/vendor/symfony/framework-bundle/Console/Application.php",
+                  "line" => 80,
+                  "args" => []
+                ],
+                [
+                  "namespace" => "Symfony\Bundle\FrameworkBundle\Console",
+                  "short_class" => "Application",
+                  "class" => "Symfony\Bundle\FrameworkBundle\Console\Application",
+                  "type" => "->",
+                  "function" => "doRun",
+                  "file" => "/workspaces/IntruNex/intrunex/vendor/symfony/console/Application.php",
+                  "line" => 171,
+                  "args" => []
+                ],
+                [
+                  "namespace" => "Symfony\Component\Console",
+                  "short_class" => "Application",
+                  "class" => "Symfony\Component\Console\Application",
+                  "type" => "->",
+                  "function" => "run",
+                  "file" => "/workspaces/IntruNex/intrunex/vendor/symfony/runtime/Runner/Symfony/ConsoleApplicationRunner.php",
+                  "line" => 54,
+                  "args" => []
+                ],
+                [
+                  "namespace" => "Symfony\Component\Runtime\Runner\Symfony",
+                  "short_class" => "ConsoleApplicationRunner",
+                  "class" => "Symfony\Component\Runtime\Runner\Symfony\ConsoleApplicationRunner",
+                  "type" => "->",
+                  "function" => "run",
+                  "file" => "/workspaces/IntruNex/intrunex/vendor/autoload_runtime.php",
+                  "line" => 29,
+                  "args" => []
+                ],
+                [
+                  "namespace" => "",
+                  "short_class" => "",
+                  "class" => "",
+                  "type" => "",
+                  "function" => "require_once",
+                  "file" => "/workspaces/IntruNex/intrunex/bin/console",
+                  "line" => 15,
+                  "args" => [
+                    [
+                      "string",
+                      "/workspaces/IntruNex/intrunex/vendor/autoload_runtime.php"
+                    ]
+                  ]
+                ]
+              ]
+              -traceAsString: """
+                #0 /workspaces/IntruNex/intrunex/vendor/symfony/messenger/Middleware/HandleMessageMiddleware.php(97): App\Modules\ScanManagement\MessageHandler\ScanJobHandler->__invoke()\n
+                #1 /workspaces/IntruNex/intrunex/vendor/symfony/messenger/Middleware/SendMessageMiddleware.php(71): Symfony\Component\Messenger\Middleware\HandleMessageMiddleware->handle()\n
+                #2 /workspaces/IntruNex/intrunex/vendor/symfony/messenger/Middleware/FailedMessageProcessingMiddleware.php(34): Symfony\Component\Messenger\Middleware\SendMessageMiddleware->handle()\n
+                #3 /workspaces/IntruNex/intrunex/vendor/symfony/messenger/Middleware/DispatchAfterCurrentBusMiddleware.php(68): Symfony\Component\Messenger\Middleware\FailedMessageProcessingMiddleware->handle()\n
+                #4 /workspaces/IntruNex/intrunex/vendor/symfony/messenger/Middleware/RejectRedeliveredMessageMiddleware.php(41): Symfony\Component\Messenger\Middleware\DispatchAfterCurrentBusMiddleware->handle()\n
+                #5 /workspaces/IntruNex/intrunex/vendor/symfony/messenger/Middleware/AddBusNameStampMiddleware.php(37): Symfony\Component\Messenger\Middleware\RejectRedeliveredMessageMiddleware->handle()\n
+                #6 /workspaces/IntruNex/intrunex/vendor/symfony/messenger/Middleware/TraceableMiddleware.php(43): Symfony\Component\Messenger\Middleware\AddBusNameStampMiddleware->handle()\n
+                #7 /workspaces/IntruNex/intrunex/vendor/symfony/messenger/MessageBus.php(73): Symfony\Component\Messenger\Middleware\TraceableMiddleware->handle()\n
+                #8 /workspaces/IntruNex/intrunex/vendor/symfony/messenger/TraceableMessageBus.php(41): Symfony\Component\Messenger\MessageBus->dispatch()\n
+                #9 /workspaces/IntruNex/intrunex/vendor/symfony/messenger/RoutableMessageBus.php(54): Symfony\Component\Messenger\TraceableMessageBus->dispatch()\n
+                #10 /workspaces/IntruNex/intrunex/vendor/symfony/messenger/Worker.php(156): Symfony\Component\Messenger\RoutableMessageBus->dispatch()\n
+                #11 /workspaces/IntruNex/intrunex/vendor/symfony/messenger/Worker.php(105): Symfony\Component\Messenger\Worker->handleMessage()\n
+                #12 /workspaces/IntruNex/intrunex/vendor/symfony/messenger/Command/ConsumeMessagesCommand.php(232): Symfony\Component\Messenger\Worker->run()\n
+                #13 /workspaces/IntruNex/intrunex/vendor/symfony/console/Command/Command.php(308): Symfony\Component\Messenger\Command\ConsumeMessagesCommand->execute()\n
+                #14 /workspaces/IntruNex/intrunex/vendor/symfony/console/Application.php(1032): Symfony\Component\Console\Command\Command->run()\n
+                #15 /workspaces/IntruNex/intrunex/vendor/symfony/framework-bundle/Console/Application.php(94): Symfony\Component\Console\Application->doRunCommand()\n
+                #16 /workspaces/IntruNex/intrunex/vendor/symfony/console/Application.php(301): Symfony\Bundle\FrameworkBundle\Console\Application->doRunCommand()\n
+                #17 /workspaces/IntruNex/intrunex/vendor/symfony/framework-bundle/Console/Application.php(80): Symfony\Component\Console\Application->doRun()\n
+                #18 /workspaces/IntruNex/intrunex/vendor/symfony/console/Application.php(171): Symfony\Bundle\FrameworkBundle\Console\Application->doRun()\n
+                #19 /workspaces/IntruNex/intrunex/vendor/symfony/runtime/Runner/Symfony/ConsoleApplicationRunner.php(54): Symfony\Component\Console\Application->run()\n
+                #20 /workspaces/IntruNex/intrunex/vendor/autoload_runtime.php(29): Symfony\Component\Runtime\Runner\Symfony\ConsoleApplicationRunner->run()\n
+                #21 /workspaces/IntruNex/intrunex/bin/console(15): require_once('...')\n
+                #22 {main}
+                """
+              -class: "RuntimeException"
+              -statusCode: 500
+              -statusText: "Internal Server Error"
+              -headers: []
+              -file: "/workspaces/IntruNex/intrunex/src/Modules/ScanManagement/MessageHandler/ScanJobHandler.php"
+              -line: 30
+              -asString: null
+            }
+          }
+        ],
+        "Symfony\Component\Messenger\Stamp\DelayStamp" => [
+          Symfony\Component\Messenger\Stamp\DelayStamp^ {
+            -delay: 1000
+          },
+          Symfony\Component\Messenger\Stamp\DelayStamp^ {
+            -delay: 2000
+          }
+        ],
+        "Symfony\Component\Messenger\Stamp\RedeliveryStamp" => [
+          Symfony\Component\Messenger\Stamp\RedeliveryStamp^ {
+            -retryCount: 1
+            -redeliveredAt: DateTimeImmutable @1762851179 {
+              date: 2025-11-11 08:52:59.902568 UTC (+00:00)
+            }
+          },
+          Symfony\Component\Messenger\Stamp\RedeliveryStamp^ {
+            -retryCount: 2
+            -redeliveredAt: DateTimeImmutable @1762851180 {
+              date: 2025-11-11 08:53:00.926580 UTC (+00:00)
+            }
+          }
+        ],
+        "Symfony\Component\Messenger\Bridge\Doctrine\Transport\DoctrineReceivedStamp" => [
+          Symfony\Component\Messenger\Bridge\Doctrine\Transport\DoctrineReceivedStamp^ {
+            -id: "183"
+          }
+        ],
+        "Symfony\Component\Messenger\Stamp\ReceivedStamp" => [
+          Symfony\Component\Messenger\Stamp\ReceivedStamp^ {
+            -transportName: "async"
+          }
+        ],
+        "Symfony\Component\Messenger\Stamp\ConsumedByWorkerStamp" => [
+          Symfony\Component\Messenger\Stamp\ConsumedByWorkerStamp^ {}
+        ],
+        "Symfony\Component\Messenger\Stamp\AckStamp" => [
+          Symfony\Component\Messenger\Stamp\AckStamp^ {
+            -ack: Closure(Envelope $envelope, Throwable $e = null)^ {
+              class: "Symfony\Component\Messenger\Worker"
+              this: Symfony\Component\Messenger\Worker { …}
+              use: {
+                $transportName: "async"
+                $acked: & false
+              }
+              file: "./vendor/symfony/messenger/Worker.php"
+              line: "149 to 152"
+            }
+          }
+        ]
+      ]
+      -message: App\Modules\ScanManagement\Message\ScanJobMessage^ {
+        -assetId: 52
+      }
+    }
+    trace: {
+      ./vendor/symfony/messenger/Middleware/HandleMessageMiddleware.php:130 { …}
+      ./vendor/symfony/messenger/Middleware/SendMessageMiddleware.php:71 { …}
+      ./vendor/symfony/messenger/Middleware/FailedMessageProcessingMiddleware.php:34 { …}
+      ./vendor/symfony/messenger/Middleware/DispatchAfterCurrentBusMiddleware.php:68 { …}
+      ./vendor/symfony/messenger/Middleware/RejectRedeliveredMessageMiddleware.php:41 { …}
+      ./vendor/symfony/messenger/Middleware/AddBusNameStampMiddleware.php:37 { …}
+      ./vendor/symfony/messenger/Middleware/TraceableMiddleware.php:43 { …}
+      ./vendor/symfony/messenger/MessageBus.php:73 { …}
+      ./vendor/symfony/messenger/TraceableMessageBus.php:41 { …}
+      ./vendor/symfony/messenger/RoutableMessageBus.php:54 { …}
+      ./vendor/symfony/messenger/Worker.php:156 { …}
+      ./vendor/symfony/messenger/Worker.php:105 { …}
+      ./vendor/symfony/messenger/Command/ConsumeMessagesCommand.php:232 { …}
+      ./vendor/symfony/console/Command/Command.php:308 { …}
+      ./vendor/symfony/console/Application.php:1032 { …}
+      ./vendor/symfony/framework-bundle/Console/Application.php:94 { …}
+      ./vendor/symfony/console/Application.php:301 { …}
+      ./vendor/symfony/framework-bundle/Console/Application.php:80 { …}
+      ./vendor/symfony/console/Application.php:171 { …}
+      ./vendor/symfony/runtime/Runner/Symfony/ConsoleApplicationRunner.php:54 { …}
+      ./vendor/autoload_runtime.php:29 { …}
+      ./bin/console:15 {
+        › 
+        › require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
+        › 
+        arguments: {
+          "/workspaces/IntruNex/intrunex/vendor/autoload_runtime.php"
+        }
+      }
+    }
+  }
+]
+08:53:06 INFO      [messenger] Received message App\Modules\ScanManagement\Message\ScanJobMessage
+[
+  "class" => "App\Modules\ScanManagement\Message\ScanJobMessage"
+]
+08:53:06 CRITICAL  [messenger] Error thrown while handling message App\Modules\ScanManagement\Message\ScanJobMessage. Removing from transport after 3 retries. Error: "Handling "App\Modules\ScanManagement\Message\ScanJobMessage" failed: Asset not found for id 52"
+[
+  "class" => "App\Modules\ScanManagement\Message\ScanJobMessage",
+  "retryCount" => 3,
+  "error" => "Handling "App\Modules\ScanManagement\Message\ScanJobMessage" failed: Asset not found for id 52",
+  "exception" => Symfony\Component\Messenger\Exception\HandlerFailedException^ {
+    #message: "Handling "App\Modules\ScanManagement\Message\ScanJobMessage" failed: Asset not found for id 52"
+    #code: 0
+    #file: "./vendor/symfony/messenger/Middleware/HandleMessageMiddleware.php"
+    #line: 130
+    -previous: RuntimeException {#1
+      #message: "Asset not found for id 52"
+      #code: 0
+      #file: "./src/Modules/ScanManagement/MessageHandler/ScanJobHandler.php"
+      #line: 30
+      trace: {
+        ./src/Modules/ScanManagement/MessageHandler/ScanJobHandler.php:30 {
+          App\Modules\ScanManagement\MessageHandler\ScanJobHandler->__invoke(ScanJobMessage $message)^
+          › if (!$asset) {
+          ›     throw new \RuntimeException('Asset not found for id ' . $message->getAssetId());
+          › }
+        }
+        ./vendor/symfony/messenger/Middleware/HandleMessageMiddleware.php:97 { …}
+        ./vendor/symfony/messenger/Middleware/SendMessageMiddleware.php:71 { …}
+        ./vendor/symfony/messenger/Middleware/FailedMessageProcessingMiddleware.php:34 { …}
+        ./vendor/symfony/messenger/Middleware/DispatchAfterCurrentBusMiddleware.php:68 { …}
+        ./vendor/symfony/messenger/Middleware/RejectRedeliveredMessageMiddleware.php:41 { …}
+        ./vendor/symfony/messenger/Middleware/AddBusNameStampMiddleware.php:37 { …}
+        ./vendor/symfony/messenger/Middleware/TraceableMiddleware.php:43 { …}
+        ./vendor/symfony/messenger/MessageBus.php:73 { …}
+        ./vendor/symfony/messenger/TraceableMessageBus.php:41 { …}
+        ./vendor/symfony/messenger/RoutableMessageBus.php:54 { …}
+        ./vendor/symfony/messenger/Worker.php:156 { …}
+        ./vendor/symfony/messenger/Worker.php:105 { …}
+        ./vendor/symfony/messenger/Command/ConsumeMessagesCommand.php:232 { …}
+        ./vendor/symfony/console/Command/Command.php:308 { …}
+        ./vendor/symfony/console/Application.php:1032 { …}
+        ./vendor/symfony/framework-bundle/Console/Application.php:94 { …}
+        ./vendor/symfony/console/Application.php:301 { …}
+        ./vendor/symfony/framework-bundle/Console/Application.php:80 { …}
+        ./vendor/symfony/console/Application.php:171 { …}
+        ./vendor/symfony/runtime/Runner/Symfony/ConsoleApplicationRunner.php:54 { …}
+        ./vendor/autoload_runtime.php:29 { …}
+        ./bin/console:15 { …}
+      }
+    }
+    -exceptions: [
+      RuntimeException {#1}
+    ]
+    -envelope: Symfony\Component\Messenger\Envelope^ {
+      -stamps: [
+        "Symfony\Component\Messenger\Stamp\BusNameStamp" => [
+          Symfony\Component\Messenger\Stamp\BusNameStamp^ {
+            -busName: "messenger.bus.default"
+          }
+        ],
+        "Symfony\Component\Messenger\Stamp\TransportMessageIdStamp" => [
+          Symfony\Component\Messenger\Stamp\TransportMessageIdStamp^ {
+            -id: 181
+          },
+          Symfony\Component\Messenger\Stamp\TransportMessageIdStamp^ {
+            -id: 182
+          },
+          Symfony\Component\Messenger\Stamp\TransportMessageIdStamp^ {
+            -id: 183
+          },
+          Symfony\Component\Messenger\Stamp\TransportMessageIdStamp^ {
+            -id: 184
+          }
+        ],
+        "Symfony\Component\Messenger\Stamp\ErrorDetailsStamp" => [
+          Symfony\Component\Messenger\Stamp\ErrorDetailsStamp^ {
+            -exceptionClass: "RuntimeException"
+            -exceptionCode: 0
+            -exceptionMessage: "Asset not found for id 52"
+            -flattenException: Symfony\Component\ErrorHandler\Exception\FlattenException^ {
+              -message: "Asset not found for id 52"
+              -code: 0
+              -previous: null
+              -trace: [
+                [
+                  "namespace" => "",
+                  "short_class" => "",
+                  "class" => "",
+                  "type" => "",
+                  "function" => "",
+                  "file" => "/workspaces/IntruNex/intrunex/src/Modules/ScanManagement/MessageHandler/ScanJobHandler.php",
+                  "line" => 30,
+                  "args" => []
+                ],
+                [
+                  "namespace" => "App\Modules\ScanManagement\MessageHandler",
+                  "short_class" => "ScanJobHandler",
+                  "class" => "App\Modules\ScanManagement\MessageHandler\ScanJobHandler",
+                  "type" => "->",
+                  "function" => "__invoke",
+                  "file" => "/workspaces/IntruNex/intrunex/vendor/symfony/messenger/Middleware/HandleMessageMiddleware.php",
+                  "line" => 97,
+                  "args" => []
+                ],
+                [
+                  "namespace" => "Symfony\Component\Messenger\Middleware",
+                  "short_class" => "HandleMessageMiddleware",
+                  "class" => "Symfony\Component\Messenger\Middleware\HandleMessageMiddleware",
+                  "type" => "->",
+                  "function" => "handle",
+                  "file" => "/workspaces/IntruNex/intrunex/vendor/symfony/messenger/Middleware/SendMessageMiddleware.php",
+                  "line" => 71,
+                  "args" => []
+                ],
+                [
+                  "namespace" => "Symfony\Component\Messenger\Middleware",
+                  "short_class" => "SendMessageMiddleware",
+                  "class" => "Symfony\Component\Messenger\Middleware\SendMessageMiddleware",
+                  "type" => "->",
+                  "function" => "handle",
+                  "file" => "/workspaces/IntruNex/intrunex/vendor/symfony/messenger/Middleware/FailedMessageProcessingMiddleware.php",
+                  "line" => 34,
+                  "args" => []
+                ],
+                [
+                  "namespace" => "Symfony\Component\Messenger\Middleware",
+                  "short_class" => "FailedMessageProcessingMiddleware",
+                  "class" => "Symfony\Component\Messenger\Middleware\FailedMessageProcessingMiddleware",
+                  "type" => "->",
+                  "function" => "handle",
+                  "file" => "/workspaces/IntruNex/intrunex/vendor/symfony/messenger/Middleware/DispatchAfterCurrentBusMiddleware.php",
+                  "line" => 68,
+                  "args" => []
+                ],
+                [
+                  "namespace" => "Symfony\Component\Messenger\Middleware",
+                  "short_class" => "DispatchAfterCurrentBusMiddleware",
+                  "class" => "Symfony\Component\Messenger\Middleware\DispatchAfterCurrentBusMiddleware",
+                  "type" => "->",
+                  "function" => "handle",
+                  "file" => "/workspaces/IntruNex/intrunex/vendor/symfony/messenger/Middleware/RejectRedeliveredMessageMiddleware.php",
+                  "line" => 41,
+                  "args" => []
+                ],
+                [
+                  "namespace" => "Symfony\Component\Messenger\Middleware",
+                  "short_class" => "RejectRedeliveredMessageMiddleware",
+                  "class" => "Symfony\Component\Messenger\Middleware\RejectRedeliveredMessageMiddleware",
+                  "type" => "->",
+                  "function" => "handle",
+                  "file" => "/workspaces/IntruNex/intrunex/vendor/symfony/messenger/Middleware/AddBusNameStampMiddleware.php",
+                  "line" => 37,
+                  "args" => []
+                ],
+                [
+                  "namespace" => "Symfony\Component\Messenger\Middleware",
+                  "short_class" => "AddBusNameStampMiddleware",
+                  "class" => "Symfony\Component\Messenger\Middleware\AddBusNameStampMiddleware",
+                  "type" => "->",
+                  "function" => "handle",
+                  "file" => "/workspaces/IntruNex/intrunex/vendor/symfony/messenger/Middleware/TraceableMiddleware.php",
+                  "line" => 43,
+                  "args" => []
+                ],
+                [
+                  "namespace" => "Symfony\Component\Messenger\Middleware",
+                  "short_class" => "TraceableMiddleware",
+                  "class" => "Symfony\Component\Messenger\Middleware\TraceableMiddleware",
+                  "type" => "->",
+                  "function" => "handle",
+                  "file" => "/workspaces/IntruNex/intrunex/vendor/symfony/messenger/MessageBus.php",
+                  "line" => 73,
+                  "args" => []
+                ],
+                [
+                  "namespace" => "Symfony\Component\Messenger",
+                  "short_class" => "MessageBus",
+                  "class" => "Symfony\Component\Messenger\MessageBus",
+                  "type" => "->",
+                  "function" => "dispatch",
+                  "file" => "/workspaces/IntruNex/intrunex/vendor/symfony/messenger/TraceableMessageBus.php",
+                  "line" => 41,
+                  "args" => []
+                ],
+                [
+                  "namespace" => "Symfony\Component\Messenger",
+                  "short_class" => "TraceableMessageBus",
+                  "class" => "Symfony\Component\Messenger\TraceableMessageBus",
+                  "type" => "->",
+                  "function" => "dispatch",
+                  "file" => "/workspaces/IntruNex/intrunex/vendor/symfony/messenger/RoutableMessageBus.php",
+                  "line" => 54,
+                  "args" => []
+                ],
+                [
+                  "namespace" => "Symfony\Component\Messenger",
+                  "short_class" => "RoutableMessageBus",
+                  "class" => "Symfony\Component\Messenger\RoutableMessageBus",
+                  "type" => "->",
+                  "function" => "dispatch",
+                  "file" => "/workspaces/IntruNex/intrunex/vendor/symfony/messenger/Worker.php",
+                  "line" => 156,
+                  "args" => []
+                ],
+                [
+                  "namespace" => "Symfony\Component\Messenger",
+                  "short_class" => "Worker",
+                  "class" => "Symfony\Component\Messenger\Worker",
+                  "type" => "->",
+                  "function" => "handleMessage",
+                  "file" => "/workspaces/IntruNex/intrunex/vendor/symfony/messenger/Worker.php",
+                  "line" => 105,
+                  "args" => []
+                ],
+                [
+                  "namespace" => "Symfony\Component\Messenger",
+                  "short_class" => "Worker",
+                  "class" => "Symfony\Component\Messenger\Worker",
+                  "type" => "->",
+                  "function" => "run",
+                  "file" => "/workspaces/IntruNex/intrunex/vendor/symfony/messenger/Command/ConsumeMessagesCommand.php",
+                  "line" => 232,
+                  "args" => []
+                ],
+                [
+                  "namespace" => "Symfony\Component\Messenger\Command",
+                  "short_class" => "ConsumeMessagesCommand",
+                  "class" => "Symfony\Component\Messenger\Command\ConsumeMessagesCommand",
+                  "type" => "->",
+                  "function" => "execute",
+                  "file" => "/workspaces/IntruNex/intrunex/vendor/symfony/console/Command/Command.php",
+                  "line" => 308,
+                  "args" => []
+                ],
+                [
+                  "namespace" => "Symfony\Component\Console\Command",
+                  "short_class" => "Command",
+                  "class" => "Symfony\Component\Console\Command\Command",
+                  "type" => "->",
+                  "function" => "run",
+                  "file" => "/workspaces/IntruNex/intrunex/vendor/symfony/console/Application.php",
+                  "line" => 1032,
+                  "args" => []
+                ],
+                [
+                  "namespace" => "Symfony\Component\Console",
+                  "short_class" => "Application",
+                  "class" => "Symfony\Component\Console\Application",
+                  "type" => "->",
+                  "function" => "doRunCommand",
+                  "file" => "/workspaces/IntruNex/intrunex/vendor/symfony/framework-bundle/Console/Application.php",
+                  "line" => 94,
+                  "args" => []
+                ],
+                [
+                  "namespace" => "Symfony\Bundle\FrameworkBundle\Console",
+                  "short_class" => "Application",
+                  "class" => "Symfony\Bundle\FrameworkBundle\Console\Application",
+                  "type" => "->",
+                  "function" => "doRunCommand",
+                  "file" => "/workspaces/IntruNex/intrunex/vendor/symfony/console/Application.php",
+                  "line" => 301,
+                  "args" => []
+                ],
+                [
+                  "namespace" => "Symfony\Component\Console",
+                  "short_class" => "Application",
+                  "class" => "Symfony\Component\Console\Application",
+                  "type" => "->",
+                  "function" => "doRun",
+                  "file" => "/workspaces/IntruNex/intrunex/vendor/symfony/framework-bundle/Console/Application.php",
+                  "line" => 80,
+                  "args" => []
+                ],
+                [
+                  "namespace" => "Symfony\Bundle\FrameworkBundle\Console",
+                  "short_class" => "Application",
+                  "class" => "Symfony\Bundle\FrameworkBundle\Console\Application",
+                  "type" => "->",
+                  "function" => "doRun",
+                  "file" => "/workspaces/IntruNex/intrunex/vendor/symfony/console/Application.php",
+                  "line" => 171,
+                  "args" => []
+                ],
+                [
+                  "namespace" => "Symfony\Component\Console",
+                  "short_class" => "Application",
+                  "class" => "Symfony\Component\Console\Application",
+                  "type" => "->",
+                  "function" => "run",
+                  "file" => "/workspaces/IntruNex/intrunex/vendor/symfony/runtime/Runner/Symfony/ConsoleApplicationRunner.php",
+                  "line" => 54,
+                  "args" => []
+                ],
+                [
+                  "namespace" => "Symfony\Component\Runtime\Runner\Symfony",
+                  "short_class" => "ConsoleApplicationRunner",
+                  "class" => "Symfony\Component\Runtime\Runner\Symfony\ConsoleApplicationRunner",
+                  "type" => "->",
+                  "function" => "run",
+                  "file" => "/workspaces/IntruNex/intrunex/vendor/autoload_runtime.php",
+                  "line" => 29,
+                  "args" => []
+                ],
+                [
+                  "namespace" => "",
+                  "short_class" => "",
+                  "class" => "",
+                  "type" => "",
+                  "function" => "require_once",
+                  "file" => "/workspaces/IntruNex/intrunex/bin/console",
+                  "line" => 15,
+                  "args" => [
+                    [
+                      "string",
+                      "/workspaces/IntruNex/intrunex/vendor/autoload_runtime.php"
+                    ]
+                  ]
+                ]
+              ]
+              -traceAsString: """
+                #0 /workspaces/IntruNex/intrunex/vendor/symfony/messenger/Middleware/HandleMessageMiddleware.php(97): App\Modules\ScanManagement\MessageHandler\ScanJobHandler->__invoke()\n
+                #1 /workspaces/IntruNex/intrunex/vendor/symfony/messenger/Middleware/SendMessageMiddleware.php(71): Symfony\Component\Messenger\Middleware\HandleMessageMiddleware->handle()\n
+                #2 /workspaces/IntruNex/intrunex/vendor/symfony/messenger/Middleware/FailedMessageProcessingMiddleware.php(34): Symfony\Component\Messenger\Middleware\SendMessageMiddleware->handle()\n
+                #3 /workspaces/IntruNex/intrunex/vendor/symfony/messenger/Middleware/DispatchAfterCurrentBusMiddleware.php(68): Symfony\Component\Messenger\Middleware\FailedMessageProcessingMiddleware->handle()\n
+                #4 /workspaces/IntruNex/intrunex/vendor/symfony/messenger/Middleware/RejectRedeliveredMessageMiddleware.php(41): Symfony\Component\Messenger\Middleware\DispatchAfterCurrentBusMiddleware->handle()\n
+                #5 /workspaces/IntruNex/intrunex/vendor/symfony/messenger/Middleware/AddBusNameStampMiddleware.php(37): Symfony\Component\Messenger\Middleware\RejectRedeliveredMessageMiddleware->handle()\n
+                #6 /workspaces/IntruNex/intrunex/vendor/symfony/messenger/Middleware/TraceableMiddleware.php(43): Symfony\Component\Messenger\Middleware\AddBusNameStampMiddleware->handle()\n
+                #7 /workspaces/IntruNex/intrunex/vendor/symfony/messenger/MessageBus.php(73): Symfony\Component\Messenger\Middleware\TraceableMiddleware->handle()\n
+                #8 /workspaces/IntruNex/intrunex/vendor/symfony/messenger/TraceableMessageBus.php(41): Symfony\Component\Messenger\MessageBus->dispatch()\n
+                #9 /workspaces/IntruNex/intrunex/vendor/symfony/messenger/RoutableMessageBus.php(54): Symfony\Component\Messenger\TraceableMessageBus->dispatch()\n
+                #10 /workspaces/IntruNex/intrunex/vendor/symfony/messenger/Worker.php(156): Symfony\Component\Messenger\RoutableMessageBus->dispatch()\n
+                #11 /workspaces/IntruNex/intrunex/vendor/symfony/messenger/Worker.php(105): Symfony\Component\Messenger\Worker->handleMessage()\n
+                #12 /workspaces/IntruNex/intrunex/vendor/symfony/messenger/Command/ConsumeMessagesCommand.php(232): Symfony\Component\Messenger\Worker->run()\n
+                #13 /workspaces/IntruNex/intrunex/vendor/symfony/console/Command/Command.php(308): Symfony\Component\Messenger\Command\ConsumeMessagesCommand->execute()\n
+                #14 /workspaces/IntruNex/intrunex/vendor/symfony/console/Application.php(1032): Symfony\Component\Console\Command\Command->run()\n
+                #15 /workspaces/IntruNex/intrunex/vendor/symfony/framework-bundle/Console/Application.php(94): Symfony\Component\Console\Application->doRunCommand()\n
+                #16 /workspaces/IntruNex/intrunex/vendor/symfony/console/Application.php(301): Symfony\Bundle\FrameworkBundle\Console\Application->doRunCommand()\n
+                #17 /workspaces/IntruNex/intrunex/vendor/symfony/framework-bundle/Console/Application.php(80): Symfony\Component\Console\Application->doRun()\n
+                #18 /workspaces/IntruNex/intrunex/vendor/symfony/console/Application.php(171): Symfony\Bundle\FrameworkBundle\Console\Application->doRun()\n
+                #19 /workspaces/IntruNex/intrunex/vendor/symfony/runtime/Runner/Symfony/ConsoleApplicationRunner.php(54): Symfony\Component\Console\Application->run()\n
+                #20 /workspaces/IntruNex/intrunex/vendor/autoload_runtime.php(29): Symfony\Component\Runtime\Runner\Symfony\ConsoleApplicationRunner->run()\n
+                #21 /workspaces/IntruNex/intrunex/bin/console(15): require_once('...')\n
+                #22 {main}
+                """
+              -class: "RuntimeException"
+              -statusCode: 500
+              -statusText: "Internal Server Error"
+              -headers: []
+              -file: "/workspaces/IntruNex/intrunex/src/Modules/ScanManagement/MessageHandler/ScanJobHandler.php"
+              -line: 30
+              -asString: null
+            }
+          }
+        ],
+        "Symfony\Component\Messenger\Stamp\DelayStamp" => [
+          Symfony\Component\Messenger\Stamp\DelayStamp^ {
+            -delay: 1000
+          },
+          Symfony\Component\Messenger\Stamp\DelayStamp^ {
+            -delay: 2000
+          },
+          Symfony\Component\Messenger\Stamp\DelayStamp^ {
+            -delay: 4000
+          }
+        ],
+        "Symfony\Component\Messenger\Stamp\RedeliveryStamp" => [
+          Symfony\Component\Messenger\Stamp\RedeliveryStamp^ {
+            -retryCount: 1
+            -redeliveredAt: DateTimeImmutable @1762851179 {
+              date: 2025-11-11 08:52:59.902568 UTC (+00:00)
+            }
+          },
+          Symfony\Component\Messenger\Stamp\RedeliveryStamp^ {
+            -retryCount: 2
+            -redeliveredAt: DateTimeImmutable @1762851180 {
+              date: 2025-11-11 08:53:00.926580 UTC (+00:00)
+            }
+          },
+          Symfony\Component\Messenger\Stamp\RedeliveryStamp^ {
+            -retryCount: 3
+            -redeliveredAt: DateTimeImmutable @1762851182 {
+              date: 2025-11-11 08:53:02.947911 UTC (+00:00)
+            }
+          }
+        ],
+        "Symfony\Component\Messenger\Bridge\Doctrine\Transport\DoctrineReceivedStamp" => [
+          Symfony\Component\Messenger\Bridge\Doctrine\Transport\DoctrineReceivedStamp^ {
+            -id: "184"
+          }
+        ],
+        "Symfony\Component\Messenger\Stamp\ReceivedStamp" => [
+          Symfony\Component\Messenger\Stamp\ReceivedStamp^ {
+            -transportName: "async"
+          }
+        ],
+        "Symfony\Component\Messenger\Stamp\ConsumedByWorkerStamp" => [
+          Symfony\Component\Messenger\Stamp\ConsumedByWorkerStamp^ {}
+        ],
+        "Symfony\Component\Messenger\Stamp\AckStamp" => [
+          Symfony\Component\Messenger\Stamp\AckStamp^ {
+            -ack: Closure(Envelope $envelope, Throwable $e = null)^ {
+              class: "Symfony\Component\Messenger\Worker"
+              this: Symfony\Component\Messenger\Worker { …}
+              use: {
+                $transportName: "async"
+                $acked: & false
+              }
+              file: "./vendor/symfony/messenger/Worker.php"
+              line: "149 to 152"
+            }
+          }
+        ]
+      ]
+      -message: App\Modules\ScanManagement\Message\ScanJobMessage^ {
+        -assetId: 52
+      }
+    }
+    trace: {
+      ./vendor/symfony/messenger/Middleware/HandleMessageMiddleware.php:130 { …}
+      ./vendor/symfony/messenger/Middleware/SendMessageMiddleware.php:71 { …}
+      ./vendor/symfony/messenger/Middleware/FailedMessageProcessingMiddleware.php:34 { …}
+      ./vendor/symfony/messenger/Middleware/DispatchAfterCurrentBusMiddleware.php:68 { …}
+      ./vendor/symfony/messenger/Middleware/RejectRedeliveredMessageMiddleware.php:41 { …}
+      ./vendor/symfony/messenger/Middleware/AddBusNameStampMiddleware.php:37 { …}
+      ./vendor/symfony/messenger/Middleware/TraceableMiddleware.php:43 { …}
+      ./vendor/symfony/messenger/MessageBus.php:73 { …}
+      ./vendor/symfony/messenger/TraceableMessageBus.php:41 { …}
+      ./vendor/symfony/messenger/RoutableMessageBus.php:54 { …}
+      ./vendor/symfony/messenger/Worker.php:156 { …}
+      ./vendor/symfony/messenger/Worker.php:105 { …}
+      ./vendor/symfony/messenger/Command/ConsumeMessagesCommand.php:232 { …}
+      ./vendor/symfony/console/Command/Command.php:308 { …}
+      ./vendor/symfony/console/Application.php:1032 { …}
+      ./vendor/symfony/framework-bundle/Console/Application.php:94 { …}
+      ./vendor/symfony/console/Application.php:301 { …}
+      ./vendor/symfony/framework-bundle/Console/Application.php:80 { …}
+      ./vendor/symfony/console/Application.php:171 { …}
+      ./vendor/symfony/runtime/Runner/Symfony/ConsoleApplicationRunner.php:54 { …}
+      ./vendor/autoload_runtime.php:29 { …}
+      ./bin/console:15 {
+        › 
+        › require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
+        › 
+        arguments: {
+          "/workspaces/IntruNex/intrunex/vendor/autoload_runtime.php"
+        }
+      }
+    }
+  }
+]
+08:53:06 INFO      [messenger] Rejected message App\Modules\ScanManagement\Message\ScanJobMessage will be sent to the failure transport Symfony\Component\Messenger\Bridge\Doctrine\Transport\DoctrineTransport.
+[
+  "class" => "App\Modules\ScanManagement\Message\ScanJobMessage",
+  "transport" => "Symfony\Component\Messenger\Bridge\Doctrine\Transport\DoctrineTransport"
+]

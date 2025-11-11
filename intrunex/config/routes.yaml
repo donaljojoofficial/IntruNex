@@ -61,5 +61,12 @@ vulnerability_detection:
     type: attribute
     prefix: /vulnerability-detection
 
+# Reporting module
+reporting:
+    resource: '../src/Modules/Reporting/Controller'
+    type: attribute
+    prefix: /reports
+
+
 
 
