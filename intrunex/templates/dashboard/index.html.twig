@@ -18,7 +18,7 @@
                 assetSelect.addEventListener('change', function() {
                     var assetId = this.value;
                     var form = document.getElementById('scan-form');
-                    var newAction = "{{ path('asset_vuln_scan', {'id': 'ASSET_ID'}) }}".replace('ASSET_ID', assetId);
+                    var newAction = "{{ path('dashboard_asset_scan', {'id': 'ASSET_ID'}) }}".replace('ASSET_ID', assetId);
                     form.action = newAction;
                 });
             }
@@ -141,7 +141,7 @@
                 </div>
                 <hr style="margin: 20px 0; border-color: var(--border-color);">
                 <h5>Run a Quick Scan</h5>
-                <form action="{{ path('asset_vuln_scan', {'id': assets.0.id|default(0)}) }}" method="POST" id="scan-form">
+                <form action="{{ path('dashboard_asset_scan', {'id': assets.0.id|default(0)}) }}" method="POST" id="scan-form">
                     <label for="asset-select">Select an asset to scan:</label>
                     <select id="asset-select" name="asset_id" class="form-control">
                         {% for asset in assets %}

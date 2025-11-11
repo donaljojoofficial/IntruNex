@@ -46,18 +46,18 @@
                     <a href="{{ path('asset_edit', {id: asset.id}) }}" class="btn btn-primary btn-sm me-1">Edit</a>
 
                     <form method="post" action="{{ path('asset_profile', {id: asset.id}) }}" style="display:inline-block;">
-                        {# <input type="hidden" name="_token" value="{{ csrf_token('profile-asset' ~ asset.id) }}"> #}
+                        <input type="hidden" name="_token" value="{{ csrf_token('profile-asset' ~ asset.id) }}">
                         <button type="submit" class="btn btn-info btn-sm me-1">Profile</button>
                     </form>
 
                     <form method="post" action="{{ path('asset_vuln_scan', {id: asset.id}) }}" style="display:inline-block;">
-                        {# <input type="hidden" name="_token" value="{{ csrf_token('vuln-scan-asset' ~ asset.id) }}"> #}
+                        <input type="hidden" name="_token" value="{{ csrf_token('vuln-scan-asset' ~ asset.id) }}">
                         <button type="submit" class="btn btn-warning btn-sm me-1">Scan</button>
                     </form>
 
                     <form method="post" action="{{ path('asset_delete', {id: asset.id}) }}" style="display:inline-block;"
                           onsubmit="return confirm('Delete {{ asset.name }}?');">
-                        {# <input type="hidden" name="_token" value="{{ csrf_token('delete-asset' ~ asset.id) }}"> #}
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete-asset' ~ asset.id) }}">
                         <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                     </form>
                 </td>

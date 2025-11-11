@@ -24,7 +24,7 @@ class DashboardController extends AbstractController
     {
         $this->assetRepository = $assetRepository;
     }
-
+{
     #[Route('/dashboard', name: 'dashboard')]
     #[IsGranted('ROLE_USER')]
     public function index(EntityManagerInterface $em): Response

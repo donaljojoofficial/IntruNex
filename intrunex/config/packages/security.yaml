@@ -45,8 +45,6 @@ security:
         - { path: ^/dashboard, roles: ROLE_USER }
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/assets, roles: ROLE_USER }
-        - { path: ^/scan-jobs, roles: ROLE_USER }
-        - { path: ^/scan-job, roles: ROLE_USER }
 
 when@test:
     security:

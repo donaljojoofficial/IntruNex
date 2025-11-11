@@ -57,14 +57,14 @@
     <p>Re-run profiling or vulnerability scan for this asset.</p>
 
     <form method="post" action="{{ path('asset_profile', {id: asset.id}) }}" style="display:inline-block;">
-        {# <input type="hidden" name="_token" value="{{ csrf_token('profile-asset' ~ asset.id) }}"> #}
+        <input type="hidden" name="_token" value="{{ csrf_token('profile-asset' ~ asset.id) }}">
         <button type="submit" class="btn btn-info me-2">
             <i class="bi bi-play-circle"></i> Profile
         </button>
     </form>
 
     <form method="post" action="{{ path('asset_vuln_scan', {id: asset.id}) }}" style="display:inline-block;">
-        {# <input type="hidden" name="_token" value="{{ csrf_token('vuln-scan-asset' ~ asset.id) }}"> #}
+        <input type="hidden" name="_token" value="{{ csrf_token('vuln-scan-asset' ~ asset.id) }}">
         <button type="submit" class="btn btn-warning">
             <i class="bi bi-shield-exclamation"></i> Vulnerability Scan
         </button>

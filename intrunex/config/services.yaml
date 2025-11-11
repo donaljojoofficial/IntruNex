@@ -45,7 +45,3 @@ services:
 
     # AssetDiscovery services
     App\Modules\AssetDiscovery\Service\AssetProfilingService: ~
-
-    App\Modules\AssetDiscovery\Controller\AssetController:
-        arguments:
-            $vulnerabilityScanService: '@App\Modules\AssetVulnerability\Service\VulnerabilityScanService'

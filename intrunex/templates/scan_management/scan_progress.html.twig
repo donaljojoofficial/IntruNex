@@ -39,7 +39,7 @@
 <!-- Delete Scan form (always shown) -->
 <form method="post" action="{{ path('scan_delete', {'id': scanJob.id}) }}" 
       onsubmit="return confirm('Are you sure you want to delete this scan job?');" style="display:inline;">
-    {# <input type="hidden" name="_token" value="{{ csrf_token('delete_scan' ~ scanJob.id) }}"> #}
+    <input type="hidden" name="_token" value="{{ csrf_token('delete_scan' ~ scanJob.id) }}">
     <button type="submit" class="btn btn-danger mb-3">Delete Scan</button>
 </form>
 

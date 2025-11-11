@@ -6,7 +6,7 @@ use App\Modules\AssetDiscovery\Entity\Asset;
 use App\Modules\AssetVulnerability\Entity\Vulnerability;
 use App\Modules\AssetDiscovery\Form\AssetFormType;
 use App\Modules\AssetDiscovery\Service\AssetProfilingService;
-use App\Modules\AssetVulnerability\Service\VulnerabilityScanService;
+use App\Modules\AssetDiscovery\Service\VulnerabilityScanService;
 use App\Modules\AssetDiscovery\Repository\AssetRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
