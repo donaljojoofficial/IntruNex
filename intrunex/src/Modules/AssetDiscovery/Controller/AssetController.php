@@ -181,7 +181,6 @@ class AssetController extends AbstractController
     #[Route('/vuln-scan/{id}', name: 'asset_vuln_scan', methods: ['POST'])]
     public function vulnScan($id, Request $request, VulnerabilityScanService $vulnerabilityScanService, MessageBusInterface $bus, EntityManagerInterface $em): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_USER');
         $asset = $em->getRepository(Asset::class)->find($id);
 
         if (!$asset || $asset->getUser() !== $this->getUser()) {
